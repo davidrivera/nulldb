@@ -28,5 +28,12 @@ namespace :db do
         wrapped_task.invoke
       end
     end
+   wrap_task :load do |wrapped_task|
+      if ActiveRecord::Base.configurations["test"]["adapter"] == "nulldb"
+        # NO-OP
+      else
+        wrapped_task.invoke
+      end
+   end
   end
 end
